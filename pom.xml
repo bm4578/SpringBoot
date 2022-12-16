@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--项目基本信息-->
+    <groupId>xyz.onlytype</groupId>
+    <artifactId>SpringBoot</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+
+    <!--    springboot版本-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.4</version>
+    </parent>
+
+    <!--版本规定-->
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <lombok-version>1.18.12</lombok-version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <druid.version>1.2.8</druid.version>
+        <mysql-connection.version>8.0.21</mysql-connection.version>
+        <swagger-ui-version>2.0.9</swagger-ui-version>
+        <springfox-version>3.0.0</springfox-version>
+    </properties>
+
+
+    <!--父模块只是管理依赖，并不参与引入-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <optional>true</optional>
+            </dependency>
+            <!-- lombok依赖 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!--mybatis-plus依赖-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connection.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!--druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--swagger-ui-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
+                <version>${swagger-ui-version}</version>
+            </dependency>
+            <!--springfox-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-version}</version>
+            </dependency>
+            <!-- 热部署-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+</project>
