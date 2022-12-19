@@ -4,11 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
     <!--项目基本信息-->
     <groupId>xyz.onlytype</groupId>
     <artifactId>SpringBoot</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+<!--    子模块-->
+    <modules>
+        <module>SpringBoot-fastdfs</module>
+    </modules>
 
     <!--    springboot版本-->
     <parent>
