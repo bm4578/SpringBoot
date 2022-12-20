@@ -13,6 +13,7 @@
 <!--    子模块-->
     <modules>
         <module>SpringBoot-fastdfs</module>
+        <module>SpringBoot-common</module>
     </modules>
 
     <!--    springboot版本-->
@@ -39,11 +40,6 @@
     <!--父模块只是管理依赖，并不参与引入-->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <optional>true</optional>
-            </dependency>
             <!-- lombok依赖 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
