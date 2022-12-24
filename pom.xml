@@ -12,10 +12,9 @@
     <version>1.0</version>
 <!--    子模块-->
     <modules>
-        <module>SpringBoot-fastdfs</module>
         <module>SpringBoot-common</module>
+        <module>springboot-minio</module>
     </modules>
-
     <!--    springboot版本-->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -31,9 +30,11 @@
         <lombok-version>1.18.12</lombok-version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <druid.version>1.2.8</druid.version>
+        <hutool-version>5.8.10</hutool-version>
         <mysql-connection.version>8.0.21</mysql-connection.version>
         <swagger-ui-version>2.0.9</swagger-ui-version>
         <springfox-version>3.0.0</springfox-version>
+
     </properties>
 
 
@@ -78,6 +79,12 @@
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox-version}</version>
             </dependency>
+            <!--hutool-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-version}</version>
+            </dependency>
             <!-- 热部署-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -86,6 +93,14 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- lombok依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
