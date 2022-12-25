@@ -2,8 +2,7 @@ package xyz.onlytype.service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.onlytype.config.utils.R;
 import xyz.onlytype.entity.File;
-
-import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -14,6 +13,7 @@ import java.util.List;
 public interface FileService {
     /**
      * 上传文件
+     * @param file 文件
      */
     List<File> uploader(MultipartFile file);
 
@@ -22,6 +22,16 @@ public interface FileService {
      */
     List<File> selectAll();
 
+    /**
+     * 删除文件
+     * @param fileName 文件名
+     */
     R delete(String fileName);
+
+    /**
+     * 下载文件
+     * @param fileName 文件名
+     */
+    R download(HttpServletResponse response, String fileName);
 
 }

@@ -1,6 +1,5 @@
 package xyz.onlytype.controller;
 
-import cn.hutool.core.io.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -10,8 +9,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.onlytype.config.utils.R;
-import xyz.onlytype.entity.File;
 import xyz.onlytype.service.FileService;
+import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * @author 白也
@@ -47,5 +47,14 @@ public class FileController {
     })
     public R deleteFile(String fileName){
         return R.success().map("data",fileService.delete(fileName));
+    }
+
+    @ApiOperation(value = "文件下载")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "文件名",dataType = "String",name = "fileName",required = true),
+    })
+    @GetMapping("/download")
+    public R download(HttpServletResponse response,String fileName){
+        return R.success().map("data",fileService.download(response,fileName));
     }
 }
