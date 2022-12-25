@@ -1,12 +1,16 @@
 package xyz.onlytype.service.impl;
 
 import io.minio.*;
+import io.minio.errors.*;
 import io.minio.messages.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -22,15 +26,8 @@ class FileServiceImplTest {
     private String bucket;
 
     @Test
-    public void selectAll() throws Exception{
-        Iterable<Result<Item>> myObjects = minioClient.listObjects(ListObjectsArgs.builder()
-                .useUrlEncodingType(true)
-                .bucket(bucket).build());
-//        HashMap<Object, Object> list = new HashMap<>();
-//        int i = 0;
-        for (Result<Item> result : myObjects) {
-            Item item = result.get();
-            System.out.println(item.lastModified() + ", " + item.size() + ", " + item.objectName());
-        }
+    public void selectAll(){
+
+
     }
 }

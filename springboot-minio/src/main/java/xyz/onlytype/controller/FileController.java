@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.onlytype.config.utils.R;
+import xyz.onlytype.entity.File;
 import xyz.onlytype.service.FileService;
 
 /**
@@ -38,5 +39,13 @@ public class FileController {
     @GetMapping
     public R selectAll(){
         return R.success().code().map("data",fileService.selectAll());
+    }
+    @DeleteMapping
+    @ApiOperation("删除文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "String",name = "fileName", value = "文件名",required = true)
+    })
+    public R deleteFile(String fileName){
+        return R.success().map("data",fileService.delete(fileName));
     }
 }

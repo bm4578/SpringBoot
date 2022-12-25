@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.onlytype.Application;
+import xyz.onlytype.config.utils.R;
 import xyz.onlytype.entity.File;
 import xyz.onlytype.service.FileService;
 import xyz.onlytype.utils.getURL;
@@ -55,7 +56,7 @@ public class FileServiceImpl implements FileService {
                     .build());
             file.getInputStream().close();
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return Collections.singletonList(new File(file.getOriginalFilename(), getURL.get(file.getOriginalFilename(), bucket)));
     }
@@ -73,9 +74,26 @@ public class FileServiceImpl implements FileService {
                 Item item = result.get();
                 list.add(new File(item.objectName(), getURL.get(item.objectName(), bucket)));
             } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         return list;
+    }
+
+    /**
+     * 删除文件
+     * @param fileName 获取文件名
+     */
+
+    @Override
+    public R delete(String fileName) {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder().bucket(bucket).object(fileName).build());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return R.error().code().message("删除失败");
+        }
+        return R.success().message("删除成功");
     }
 }

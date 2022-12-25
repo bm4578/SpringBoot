@@ -1,5 +1,6 @@
 package xyz.onlytype.service;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.onlytype.config.utils.R;
 import xyz.onlytype.entity.File;
 
 import java.util.HashMap;
@@ -20,5 +21,7 @@ public interface FileService {
      * 查询
      */
     List<File> selectAll();
+
+    R delete(String fileName);
 
 }
