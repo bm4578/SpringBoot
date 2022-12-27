@@ -25,6 +25,10 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    /**
+     * 上传文件
+     * @param file 文件
+     */
     @PostMapping
     @ApiOperation(value = "文件上传")
     @Validated
@@ -35,11 +39,20 @@ public class FileController {
     public R uploader(@RequestParam("file") @RequestPart MultipartFile file){
         return R.success().code().map("url",fileService.uploader(file));
     }
-    @ApiOperation("查询列表")
+
+    /**
+     * 查询文件列表
+     */
+    @ApiOperation("查询文件")
     @GetMapping
     public R selectAll(){
         return R.success().code().map("data",fileService.selectAll());
     }
+
+    /**
+     * 删除文件
+     * @param fileName 文件名
+     */
     @DeleteMapping
     @ApiOperation("删除文件")
     @ApiImplicitParams({
@@ -49,6 +62,11 @@ public class FileController {
         return R.success().map("data",fileService.delete(fileName));
     }
 
+    /**
+     * 下载文件
+     * @param response response
+     * @param fileName 文件名
+     */
     @ApiOperation(value = "文件下载")
     @ApiImplicitParams({
             @ApiImplicitParam(value = "文件名",dataType = "String",name = "fileName",required = true),

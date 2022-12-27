@@ -27,7 +27,7 @@ public class InitProject implements ApplicationRunner{
     public void run(ApplicationArguments args) throws Exception {
         InetAddress localHost = InetAddress.getLocalHost();
         String url = "http://"+localHost.getCanonicalHostName()+":"+port;
-        log.warn("服务器端口:  " +url);
+        log.warn("前端地址:  " +url);
         log.warn("接口文档地址:  " +url+"/doc.html");
     }
 }
