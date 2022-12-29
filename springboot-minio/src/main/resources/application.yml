@@ -8,30 +8,13 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-#  spring.thymeleaf.cache=false
-#  spring.thymeleaf.prefix=classpath:/templates/
-#  spring.thymeleaf.check-template-location=true
-#  spring.thymeleaf.suffix=.html
-#  spring.thymeleaf.encoding=UTF-8
-#  spring.thymeleaf.content-type=text/html
-#  spring.thymeleaf.mode=HTML5
-
-#    cache: false
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    encoding: UTF-8
-#    servlet:
-#      content-type: text/html
-#    mode: HTML5
-#    check-template-location: true
-
 
 # minio 参数配置
 minio:
-  ip: http://192.168.99.102:9000
-  username: codetype
-  password: codetype517230..
-  bucket: "ests"
+  ip: http://192.168.99.123:9000
+  username: root
+  password: root1234
+  bucket: "test"
 
 
 logging:
