@@ -11,3 +11,4 @@
    ![](https://raw.githubusercontent.com/bm4578/images/master/202212291419297.png)
 5. 配置application.yml
    ![](https://raw.githubusercontent.com/bm4578/images/master/202212291449463.png)
+   

@@ -50,7 +50,6 @@ public class FileServiceImpl implements FileService {
         try {
             //创建桶
             if (! minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build())) minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
-            log.warn(bucket+"创建成功");
             //上传文件
             minioClient.putObject(PutObjectArgs.builder()
                     .object(file.getOriginalFilename())
