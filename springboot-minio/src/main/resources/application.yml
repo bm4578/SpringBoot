@@ -11,9 +11,9 @@ spring:
 
 # minio 参数配置
 minio:
-  ip: http://192.168.99.123:9000  # 管理端口
+  ip: http://192.168.99.238:9000  # 管理端口
   username: root    #登录用户，可以自己创建其他用户
-  password: root1234
+  password: root123456
   bucket: "test"  #Bucket的名称
 
 logging:
