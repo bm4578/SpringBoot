@@ -2,6 +2,7 @@ package xyz.onlytype.config.utils;
 
 /**
  * 返回状态码
+ * @author 白也
  */
 public interface ResultCode {
     Integer SUCCESS_CODE = 200;

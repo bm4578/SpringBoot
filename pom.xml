@@ -47,7 +47,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok-version}</version>
-                <scope>provided</scope>
             </dependency>
             <!--mybatis-plus依赖-->
             <dependency>
@@ -59,7 +58,6 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connection.version}</version>
-                <scope>runtime</scope>
             </dependency>
             <!--druid连接池-->
             <dependency>
@@ -86,22 +84,8 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-version}</version>
             </dependency>
-            <!-- 热部署-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <!-- lombok依赖 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
 
 </project>
