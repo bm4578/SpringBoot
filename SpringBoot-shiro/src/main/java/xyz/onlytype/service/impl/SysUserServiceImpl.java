@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import xyz.onlytype.VO.UserRoleVO;
 import xyz.onlytype.dao.SysUserDao;
 import xyz.onlytype.entity.SysUser;
 import xyz.onlytype.service.SysUserService;
@@ -54,6 +55,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
         wrapper.eq("username",username);
         return userDao.selectOne(wrapper);
+    }
+
+    /**
+     * 根据用户查询所有角色
+     *
+     * @param username 用户名
+     * @return 用户角色列表
+     */
+    @Override
+    public List<UserRoleVO> findRolesByUserName(String username) {
+        return userDao.findRolesByUserName(username);
     }
 }
 

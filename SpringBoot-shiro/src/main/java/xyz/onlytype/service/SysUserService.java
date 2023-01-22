@@ -1,6 +1,7 @@
 package xyz.onlytype.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.onlytype.VO.UserRoleVO;
 import xyz.onlytype.entity.SysUser;
 
 import java.util.List;
@@ -24,5 +25,12 @@ public interface SysUserService extends IService<SysUser> {
      * @param username 用户名
      */
     SysUser login(String username);
+
+    /**
+     * 根据用户查询所有角色
+     * @param username 用户名
+     * @return 用户角色列表
+     */
+    List<UserRoleVO> findRolesByUserName(String username);
 }
 

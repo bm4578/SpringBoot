@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import xyz.onlytype.VO.UserRoleVO;
 import xyz.onlytype.entity.SysUser;
 
 /**
@@ -15,6 +15,7 @@ import xyz.onlytype.entity.SysUser;
  */
 @Mapper
 public interface SysUserDao extends BaseMapper<SysUser> {
-
+    //根据用户查询所有角色
+    List<UserRoleVO> findRolesByUserName(String username);
 }
 

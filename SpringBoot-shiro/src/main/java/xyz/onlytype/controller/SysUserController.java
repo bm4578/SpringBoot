@@ -10,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import xyz.onlytype.service.SysUserService;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,13 @@ public class SysUserController{
             return R.fail(HttpStatus.ERROR,"密码错误");
         }
         return  R.ok(HttpStatus.SUCCESS,"登录成功");
+    }
+
+    @GetMapping("/list")
+    @RequiresRoles("admin")
+    @ApiOperation(value = "权限测试")
+    public String hello(){
+        return "hello,world";
     }
 }
 

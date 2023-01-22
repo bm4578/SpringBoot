@@ -7,13 +7,17 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
+import xyz.onlytype.VO.UserRoleVO;
 import xyz.onlytype.entity.SysUser;
 import xyz.onlytype.service.SysUserService;
+
+import java.util.List;
 
 /**
  * @author 白也
@@ -28,6 +32,17 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("执行了授权");
+        //获取身份信息
+        String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
+        List<UserRoleVO> rolesByUserName = sysUserService.findRolesByUserName(primaryPrincipal);
+        //授权角色信息
+        if (ObjectUtil.isNotEmpty(rolesByUserName)){
+            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            rolesByUserName.forEach(role->{
+                simpleAuthorizationInfo.addRole(role.getRoleName());
+            });
+            return simpleAuthorizationInfo;
+        }
         return null;
     }
     //认证
