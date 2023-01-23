@@ -97,7 +97,7 @@ public class SysUserController{
             sysUserService.register(username , password);
             return R.ok(HttpStatus.SUCCESS,"注册成功");
         }else {
-            return R.fail(new RuntimeException("验证码错误！！！"));
+            return R.fail("验证码错误 ！！！");
         }
         }catch (NullPointerException e){
             return R.fail("验证码过期，请重新获取 ！！！");
