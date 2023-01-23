@@ -1,4 +1,4 @@
-package xyz.onlytype.config;
+package xyz.onlytype.shiro.config;
 
 
 import cn.hutool.core.util.ObjectUtil;
@@ -12,7 +12,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
 import xyz.onlytype.VO.UserRoleVO;
 import xyz.onlytype.entity.SysUser;
 import xyz.onlytype.service.SysUserService;
@@ -31,7 +30,6 @@ public class UserRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("执行了授权");
         //获取身份信息
         String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
         List<UserRoleVO> rolesByUserName = sysUserService.findRolesByUserName(primaryPrincipal);

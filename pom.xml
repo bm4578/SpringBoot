@@ -35,6 +35,7 @@
         <mysql-connection.version>8.0.21</mysql-connection.version>
         <swagger-ui-version>2.0.9</swagger-ui-version>
         <springfox-version>3.0.0</springfox-version>
+        <ehcache-version>2.10.6</ehcache-version>
 
     </properties>
 
@@ -83,6 +84,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-version}</version>
+            </dependency>
+            <!--ehcache缓存-->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

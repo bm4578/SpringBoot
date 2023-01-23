@@ -11,6 +11,13 @@ spring:
     url: jdbc:mysql://192.168.99.102:3306/minio?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: root517230
+  #redis配置
+  redis:
+    host: 192.168.99.102
+    port: 6379
+    password: root517230
+    timeout: 10000
+
 
 #mybatis-plus
 mybatis-plus:

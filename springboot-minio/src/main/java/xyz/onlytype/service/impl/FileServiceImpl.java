@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.onlytype.Application;
-import xyz.onlytype.config.utils.R;
+import xyz.onlytype.utils.R;
 import xyz.onlytype.entity.File;
 import xyz.onlytype.service.FileService;
 import xyz.onlytype.utils.getURL;

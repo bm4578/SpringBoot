@@ -1,4 +1,4 @@
-package xyz.onlytype.config.web;
+package xyz.onlytype.web;
 
 import lombok.Data;
 import org.slf4j.Logger;

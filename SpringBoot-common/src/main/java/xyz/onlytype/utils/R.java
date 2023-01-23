@@ -1,12 +1,10 @@
-package xyz.onlytype.config.utils;
+package xyz.onlytype.utils;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

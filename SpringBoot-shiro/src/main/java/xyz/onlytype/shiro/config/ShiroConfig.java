@@ -1,4 +1,4 @@
-package xyz.onlytype.config;
+package xyz.onlytype.shiro.config;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -13,8 +13,6 @@ import java.util.HashMap;
  */
 @Configuration
 public class ShiroConfig {
-
-    //
 
     /**
      * 3. ShiroFilterFactoryBean
@@ -58,9 +56,20 @@ public class ShiroConfig {
     public UserRealm userRealm(){
         UserRealm userRealm = new UserRealm();
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+       //设置加密算法与散列次数
         credentialsMatcher.setHashAlgorithmName("MD5");
         credentialsMatcher.setHashIterations(1024);
         userRealm.setCredentialsMatcher(credentialsMatcher);
+//        //开启缓存管理
+//        userRealm.setCacheManager(new EhCacheManager());
+//        //全局缓存管理
+//        userRealm.setCachingEnabled(true);
+//        //认证
+//        userRealm.setAuthenticationCachingEnabled(true);
+//        userRealm.setAuthenticationCacheName("AuthenticationCache");
+//        //授权
+//        userRealm.setAuthorizationCachingEnabled(true);
+//        userRealm.setAuthorizationCacheName("AuthorizationCache");
         return userRealm;
     }
 }

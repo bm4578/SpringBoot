@@ -1,4 +1,4 @@
-package xyz.onlytype.config.swagger;
+package xyz.onlytype.swagger;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;

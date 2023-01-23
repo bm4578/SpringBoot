@@ -3,8 +3,7 @@ package xyz.onlytype;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import xyz.onlytype.config.MinioConfig;
-import xyz.onlytype.config.web.InitProject;
+import xyz.onlytype.web.InitProject;
 
 /**
  * @author 白也
