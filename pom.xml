@@ -14,6 +14,7 @@
     <modules>
         <module>SpringBoot-common</module>
         <module>springboot-minio</module>
+        <module>springboot-springsecurity</module>
     </modules>
     <!--    springboot版本-->
     <parent>
