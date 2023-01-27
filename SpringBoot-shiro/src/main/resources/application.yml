@@ -21,8 +21,8 @@ spring:
     protocol: smtp # 邮件协议
     host: smtp.163.com # 网易邮箱smtp服务器地址
     port: 25
-    username: m15319631269@163.com # 发件人邮箱地址
-    password: PIEREBBVCSICPISL # 授权码
+    username:  # 发件人邮箱地址
+    password:  # 授权码
     properties:
       mail:
         debug: true # 完整打印发邮件日志
