@@ -1,11 +1,9 @@
 package xyz.onlytype.shiro.config;
-
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import xyz.onlytype.shiro.Realm.UserRealm;
 import java.util.HashMap;
 
 /**
@@ -15,14 +13,13 @@ import java.util.HashMap;
 public class ShiroConfig {
 
     /**
-     * 3. ShiroFilterFactoryBean
      * 负责拦截请求
      */
-    @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager){
+    @Bean("shiroFilterFactoryBean")
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //设置安全管理器
-        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
+        shiroFilterFactoryBean.setSecurityManager(securityManager());
         //配置访问资源
         HashMap<String, String> map = new HashMap<>();
         //authc：表示请求这个资源需要认证和授权
@@ -35,31 +32,26 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setLoginUrl("/doc.html");
         return shiroFilterFactoryBean;
     }
-    //
+
 
     /**
-     * 2. DafaultwebSecurityManager
-     *  创建安全管理器
+     *  安全管理器
      */
-    @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager( UserRealm userRealm) {
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+    @Bean("securityManager")
+    public DefaultWebSecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置Realm
-        defaultWebSecurityManager.setRealm(userRealm);
-        return defaultWebSecurityManager;
+        securityManager.setRealm(userRealm());
+        return securityManager;
     }
 
     /**
-     * 1. 创建 Realm 对象
+     *  自定义Realm 对象
      */
-    @Bean
+    @Bean("userRealm")
     public UserRealm userRealm(){
-        UserRealm userRealm = new UserRealm();
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-       //设置加密算法与散列次数
-        credentialsMatcher.setHashAlgorithmName("MD5");
-        credentialsMatcher.setHashIterations(1024);
-        userRealm.setCredentialsMatcher(credentialsMatcher);
+
+//        userRealm.setCredentialsMatcher(credentialsMatcher);
 //        //开启缓存管理
 //        userRealm.setCacheManager(new EhCacheManager());
 //        //全局缓存管理
@@ -70,6 +62,6 @@ public class ShiroConfig {
 //        //授权
 //        userRealm.setAuthorizationCachingEnabled(true);
 //        userRealm.setAuthorizationCacheName("AuthorizationCache");
-        return userRealm;
+        return new UserRealm();
     }
 }

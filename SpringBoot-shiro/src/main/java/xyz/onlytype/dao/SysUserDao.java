@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import xyz.onlytype.VO.UserRoleVO;
+import xyz.onlytype.VO.user.UserEnabledVO;
+import xyz.onlytype.VO.user.UserRoleVO;
 import xyz.onlytype.entity.SysUser;
 
 /**

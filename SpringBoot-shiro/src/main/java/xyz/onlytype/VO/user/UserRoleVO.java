@@ -1,4 +1,4 @@
-package xyz.onlytype.VO;
+package xyz.onlytype.VO.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * 封装用户权限信息
  * @author 白也
  * @date 2023/1/22 14:57
  */
@@ -23,5 +24,4 @@ public class UserRoleVO implements Serializable {
     private Long roleId;
     //角色名称
     private String roleName;
-
 }

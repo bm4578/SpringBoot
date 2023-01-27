@@ -3,6 +3,7 @@ package xyz.onlytype.VO;
 import lombok.Data;
 
 /**
+ * 验证码时效性
  * @author 白也
  * @date 2023/1/23 17:02
  */

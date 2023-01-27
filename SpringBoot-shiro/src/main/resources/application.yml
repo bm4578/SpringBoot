@@ -17,6 +17,17 @@ spring:
     port: 6379
     password: root517230
     timeout: 10000
+  mail:
+    protocol: smtp # 邮件协议
+    host: smtp.163.com # 网易邮箱smtp服务器地址
+    port: 25
+    username: m15319631269@163.com # 发件人邮箱地址
+    password: PIEREBBVCSICPISL # 授权码
+    properties:
+      mail:
+        debug: true # 完整打印发邮件日志
+    default-encoding: UTF-8
+
 
 
 #mybatis-plus
@@ -29,7 +40,7 @@ mybatis-plus:
       logic-not-delete-value: 1
       logic-delete-field: deleted
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true  # 开启驼峰映射
     cache-enabled: false
     call-setters-on-nulls: true
 
@@ -43,3 +54,10 @@ knife4j:
   setting:
     # 是否开启动态参数调试功能,默认关闭
     enableDynamicParameter: true
+
+# token配置
+token:
+  # 令牌密钥
+  secret: $A@YgW@Ws4
+  # 令牌有效期（默认30分钟）
+  expireTime: 30

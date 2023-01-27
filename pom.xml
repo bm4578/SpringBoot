@@ -32,11 +32,12 @@
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <druid.version>1.2.8</druid.version>
         <hutool-version>5.8.10</hutool-version>
+        <shiro-version>1.7.1</shiro-version>
         <mysql-connection.version>8.0.21</mysql-connection.version>
         <swagger-ui-version>2.0.9</swagger-ui-version>
         <springfox-version>3.0.0</springfox-version>
         <ehcache-version>2.10.6</ehcache-version>
-
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
 
@@ -85,14 +86,19 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-version}</version>
             </dependency>
-            <!--ehcache缓存-->
+            <!--shiro-->
             <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache-version}</version>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
+            <!-- jwt-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

@@ -26,6 +26,5 @@
         </foreach>
         on duplicate key update
          role_name = values(role_name) , create_time = values(create_time) , update_time = values(update_time)     </insert>
-
 </mapper>
 

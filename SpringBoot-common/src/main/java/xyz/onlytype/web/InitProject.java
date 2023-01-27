@@ -1,6 +1,7 @@
 package xyz.onlytype.web;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -15,9 +16,8 @@ import java.net.InetAddress;
 @Validated
 @ConfigurationProperties(prefix = "server")
 @Data
+@Slf4j
 public class InitProject implements ApplicationRunner{
-
-    private static final Logger log = LoggerFactory.getLogger(WebMvcConfig.class);
 
     @Max(value = 1288,message = "端口限制，不能超过最大值")
     @Min(value = 100,message = "端口限制，不能低于最小值")
