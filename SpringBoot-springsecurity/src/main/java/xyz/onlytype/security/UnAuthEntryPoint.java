@@ -2,8 +2,8 @@ package xyz.onlytype.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import xyz.onlytype.config.utils.ResponseUtils;
-import xyz.onlytype.config.utils.ResultModel;
+import xyz.onlytype.security.config.utils.ResponseUtils;
+import xyz.onlytype.security.config.utils.ResultModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

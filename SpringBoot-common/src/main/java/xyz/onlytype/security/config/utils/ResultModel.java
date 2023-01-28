@@ -1,8 +1,7 @@
-package xyz.onlytype.config.utils;
+package xyz.onlytype.security.config.utils;
 
 import lombok.Data;
 
-import javax.xml.soap.SAAJResult;
 import java.io.Serializable;
 
 /**
@@ -79,5 +78,9 @@ public class ResultModel<T> implements Serializable {
         resultModel.setResult(data);
         return resultModel;
     }
-
+    public static ResultModel error(int code,Object data){
+        resultModel.setCode(code);
+        resultModel.setResult(data);
+        return resultModel;
+    }
 }

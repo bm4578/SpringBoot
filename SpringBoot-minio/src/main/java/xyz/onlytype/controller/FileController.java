@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.onlytype.config.utils.R;
+import xyz.onlytype.security.config.utils.R;
 import xyz.onlytype.service.FileService;
 import javax.servlet.http.HttpServletResponse;
 

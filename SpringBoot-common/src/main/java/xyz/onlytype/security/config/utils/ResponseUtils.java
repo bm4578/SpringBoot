@@ -1,8 +1,7 @@
-package xyz.onlytype.config.utils;
+package xyz.onlytype.security.config.utils;
 
 import javax.servlet.http.HttpServletResponse;
 
-import cn.hutool.http.server.HttpServerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package xyz.onlytype.config.utils;
+package xyz.onlytype.security.config.utils;
 
 /**
  * 返回状态码

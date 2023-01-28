@@ -1,6 +1,6 @@
 package xyz.onlytype.service;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.onlytype.config.utils.R;
+import xyz.onlytype.security.config.utils.R;
 import xyz.onlytype.entity.File;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

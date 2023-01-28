@@ -35,7 +35,7 @@
         <mysql-connection.version>8.0.21</mysql-connection.version>
         <swagger-ui-version>2.0.9</swagger-ui-version>
         <springfox-version>3.0.0</springfox-version>
-
+        <jjwt.version>0.9.1</jjwt.version>
     </properties>
 
 
@@ -86,10 +86,10 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-version}</version>
             </dependency>
-            <!-- 热部署-->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
