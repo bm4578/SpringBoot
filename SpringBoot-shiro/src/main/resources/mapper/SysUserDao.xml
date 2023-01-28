@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.onlytype.dao.SysUserDao">
+
+    <resultMap type="xyz.onlytype.entity.SysUser" id="SysUserMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="isArticle" column="is_article" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="isSalt" column="is_salt" jdbcType="VARCHAR"/>
+        <result property="isEmail" column="is_email" jdbcType="VARCHAR"/>
+        <result property="isImg" column="is_img" jdbcType="VARCHAR"/>
+        <result property="isPermission" column="is_permission" jdbcType="INTEGER"/>
+        <result property="isEnabled" column="is_enabled" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--开启二级缓存-->
+    <cache />
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into minio.sys_user(is_article, username, password, is_salt, is_email, confirmation_code, is_img, is_permission, is_enabled, activation_time, create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.isArticle}, #{entity.username}, #{entity.password}, #{entity.isSalt}, #{entity.isEmail}, #{entity.confirmationCode}, #{entity.isImg}, #{entity.isPermission}, #{entity.isEnabled}, #{entity.activationTime}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into minio.sys_user(is_article, username, password, is_salt, is_email, confirmation_code, is_img, is_permission, is_enabled, activation_time, create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.isArticle}, #{entity.username}, #{entity.password}, #{entity.isSalt}, #{entity.isEmail}, #{entity.confirmationCode}, #{entity.isImg}, #{entity.isPermission}, #{entity.isEnabled}, #{entity.activationTime}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        is_article = values(is_article) , username = values(username) , password = values(password) , is_salt = values(is_salt) , is_email = values(is_email) , confirmation_code = values(confirmation_code) , is_img = values(is_img) , is_permission = values(is_permission) , is_enabled = values(is_enabled) , activation_time = values(activation_time) , create_time = values(create_time) , update_time = values(update_time)     </insert>
+    <!--多表联查用户权限信息-->
+    <select id="findRolesByUserName" resultType="xyz.onlytype.VO.user.UserRoleVO">
+        SELECT u.user_id,u.username,r.role_id,r.role_name FROM sys_user AS u
+                                                                   LEFT JOIN  sys_user_role AS u_r
+                                                                              ON u.user_id = u_r.user_id
+                                                                   LEFT JOIN sys_role AS r
+                                                                             ON r.role_id = u_r.role_id
+        WHERE u.username = #{username}
+    </select>
+</mapper>
+
