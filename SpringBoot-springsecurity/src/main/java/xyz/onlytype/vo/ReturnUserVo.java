@@ -1,19 +1,19 @@
 package xyz.onlytype.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author 白也
- * @title
+ * @titlen 返回信息
  * @date 2023/1/28 1:24 下午
  */
+@Data
 public class ReturnUserVo implements Serializable {
-    //用户 ID
-    private Long userId;
-    //系统登录名
-    private String username;
-    //登录密码，加密存储, admin/1234
-    private String password;
     //token
     private String token;
+    //权限信息
+    private List<String> permission;
 }

@@ -1,9 +1,11 @@
 package xyz.onlytype.entity;
 
 import cn.hutool.core.util.ObjectUtil;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import xyz.onlytype.vo.UserRoleVO;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +16,7 @@ import java.util.List;
  * @title
  * @date 2023/1/28 11:51 上午
  */
-
+@Data
 public class SecurityUser implements UserDetails {
     //当前登录的用户
     private SysUser sysUser;
@@ -76,7 +78,7 @@ public class SecurityUser implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
     /**
      * 凭证是否过期

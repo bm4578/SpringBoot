@@ -33,6 +33,23 @@
         </foreach>
         on duplicate key update
          is_article = values(is_article) , username = values(username) , password = values(password) , is_salt = values(is_salt) , is_email = values(is_email) , is_img = values(is_img) , is_permission = values(is_permission) , is_enabled = values(is_enabled) , create_time = values(create_time) , update_time = values(update_time)     </insert>
+    <select id="findRolesByUserId" resultType="xyz.onlytype.vo.UserRoleVO">
+        SELECT u.user_id,u.username,r.role_id,r.role_name FROM sys_user AS u
+                                                                   LEFT JOIN  sys_user_role AS u_r
+                                                                              ON u.user_id = u_r.user_id
+                                                                   LEFT JOIN sys_role AS r
+                                                                             ON r.role_id = u_r.role_id
+        WHERE u.user_id = #{userId}
+    </select>
+    <!--    用户角色查询-->
+    <select id="findRoleByUserId" resultType="java.lang.String">
+        SELECT r.role_key FROM sys_user AS u
+                                    LEFT JOIN  sys_user_role AS u_r
+                                               ON u.user_id = u_r.user_id
+                                    LEFT JOIN sys_role AS r
+                                              ON r.role_id = u_r.role_id
+        WHERE u.user_id = #{userId}
+    </select>
 
 </mapper>
 

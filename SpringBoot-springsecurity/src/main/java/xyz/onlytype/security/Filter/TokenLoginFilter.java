@@ -1,18 +1,19 @@
 package xyz.onlytype.security.Filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import xyz.onlytype.entity.SecurityUser;
-import xyz.onlytype.entity.SysUser;
-import xyz.onlytype.security.config.utils.ResponseUtils;
-import xyz.onlytype.security.config.utils.ResultModel;
+import xyz.onlytype.config.utils.ResponseUtils;
+import xyz.onlytype.config.utils.ResultModel;
+import xyz.onlytype.security.exception.CustomerAuthenionException;
 import xyz.onlytype.security.token.TokenManager;
+import xyz.onlytype.vo.ReturnUserVo;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,50 +21,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 白也
  * @title 登录拦截
  * @date 2023/1/28 11:11 上午
  */
+
+@Slf4j
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
+
     private TokenManager tokenManager;
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
     private AuthenticationManager authenticationManager;
 
-    public TokenLoginFilter(TokenManager tokenManager, RedisTemplate redisTemplate, AuthenticationManager authenticationManager) {
+    public TokenLoginFilter(TokenManager tokenManager, RedisTemplate<String, Object> redisTemplate, AuthenticationManager authenticationManager) {
         this.tokenManager = tokenManager;
         this.redisTemplate = redisTemplate;
         this.authenticationManager = authenticationManager;
+        //允许其它请求认证
+        this.setPostOnly(false);
+        //设置登录路径
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/user/login", "POST"));
     }
 
     /**
      * 执行认证的方法
+     *
      * @param request
      * @param response
      * @return
-     * @throws AuthenticationException
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        //获取用户提交的数据
-        ObjectMapper objectMapper = new ObjectMapper();
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         try {
-            SysUser user = objectMapper.readValue(request.getInputStream(), SysUser.class);
-            //校验密码
-           return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()
-                    ,new ArrayList<>())
+            //从表单中获取用户信息
+            return authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getParameter("username"),
+                            request.getParameter("password")
+                            , new ArrayList<>())
             );
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (AuthenticationException e) {
+           throw new CustomerAuthenionException(e.getMessage());
         }
-        return super.attemptAuthentication(request, response);
     }
 
     /**
-     *
      * 认证成功之后
+     *
      * @param request
      * @param response
      * @param chain
@@ -73,30 +80,32 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
      * @throws ServletException
      */
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        //获得用户信息
-        SecurityUser authorities = (SecurityUser) authResult.getAuthorities();
-        //issuer ：持有人
-        String issuer = authorities.getUsername();
-        //权限信息
-        Map<String, Object> permissionMap = new HashMap<>();
-        permissionMap.put("permission",authorities.getPermissionList());
-        //生成token
-        String token = tokenManager.getToken(authorities.getSysUser().getUserId(), issuer, permissionMap);
-        //存入redis ==>issuer:权限信息
-        redisTemplate.opsForValue().set(issuer,authorities.getPermissionList());
-        //返回数据
-        ResponseUtils.out(response, ResultModel.ok(token));
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+        try {
+            //为空时生成token
+            SecurityUser principal = (SecurityUser) authResult.getPrincipal();
+            String token = tokenManager.getToken(principal.getUsername());
+            ReturnUserVo returnUserVo = new ReturnUserVo();
+            returnUserVo.setToken(token);
+            returnUserVo.setPermission(principal.getPermissionList());
+            //存入redis
+            redisTemplate.opsForValue().set("token", returnUserVo, tokenManager.getRemainingTime(token), TimeUnit.MINUTES);
+            // 返回生成的token
+            ResponseUtils.out(response, ResultModel.ok(token));
+        } catch (Exception e) {
+            ResultModel.error("token生成异常", e.getMessage());
+        }
     }
 
     /**
      * 认证失败
+     *
      * @param request
      * @param response
      * @param failed
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtils.out(response,ResultModel.error(401,failed.getMessage()));
+        ResponseUtils.out(response, ResultModel.error(401, failed.getMessage()));
     }
 }

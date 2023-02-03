@@ -1,4 +1,6 @@
 package xyz.onlytype.entity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -16,7 +18,8 @@ import java.util.Date;
 @Data
 public class SysUser extends Model<SysUser> implements Serializable{
     //用户 ID
-    private Long userId;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String userId;
     //与博客关联
     private String isArticle;
     //系统登录名
@@ -40,96 +43,6 @@ public class SysUser extends Model<SysUser> implements Serializable{
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date updateTime = new Date();
-
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getIsArticle() {
-        return isArticle;
-    }
-
-    public void setIsArticle(String isArticle) {
-        this.isArticle = isArticle;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getIsSalt() {
-        return isSalt;
-    }
-
-    public void setIsSalt(String isSalt) {
-        this.isSalt = isSalt;
-    }
-
-    public String getIsEmail() {
-        return isEmail;
-    }
-
-    public void setIsEmail(String isEmail) {
-        this.isEmail = isEmail;
-    }
-
-    public String getIsImg() {
-        return isImg;
-    }
-
-    public void setIsImg(String isImg) {
-        this.isImg = isImg;
-    }
-
-    public Integer getIsPermission() {
-        return isPermission;
-    }
-
-    public void setIsPermission(Integer isPermission) {
-        this.isPermission = isPermission;
-    }
-
-    public Integer getIsEnabled() {
-        return isEnabled;
-    }
-
-    public void setIsEnabled(Integer isEnabled) {
-        this.isEnabled = isEnabled;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     /**
      * 获取主键值
      *

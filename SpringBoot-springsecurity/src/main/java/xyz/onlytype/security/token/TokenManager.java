@@ -1,41 +1,41 @@
 package xyz.onlytype.security.token;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.util.Calendar;
+import xyz.onlytype.entity.SecurityUser;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 白也
  * @title token生成器
  * @date 2023/1/27 20:17
  */
-@Component
+@Component("tokenManager")
 @Slf4j
 public class TokenManager {
     @Value("${token.secret}")
     private String secret;
-
+    //创建创建时间
+    private static final long TIME = 1800000;
     /**
      * 生成密钥
-     * @param issuer 持有人
-     * @param issuerId 持有人id
-     * @param claims 非隐私信息
+     * @param username 非隐私信息
      */
-    public  String getToken(Long issuerId,String issuer, Map<String, Object> claims) {
+    public  String getToken(String username) {
         //过期时间默认30分钟
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.MINUTE, 30);
+        Date expirationDate = new Date(System.currentTimeMillis() + TIME);
+        Map<String, Object> claims = new HashMap<>(2);
+        claims.put(Claims.ISSUER,username);
+        claims.put(Claims.ISSUED_AT, new Date());
         return Jwts.builder()
-                .setSubject(String.valueOf(issuerId))
-                .setIssuer(issuer)
                 .setClaims(claims)
-                .setExpiration(instance.getTime())
+                .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
@@ -50,27 +50,11 @@ public class TokenManager {
         try {
             claims = Jwts.parser()
                     .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseClaimsJws(token).getBody();
         } catch (ClaimJwtException e) {
             log.error("error", e);
         }
         return claims;
-    }
-
-    /**
-     * 返回用户id
-     * @param token token
-     */
-    public  String getUserId( String token){
-        String userId = null;
-        try {
-            Claims claims = getClaimsFromToken(token);
-            userId = claims.getSubject();
-        } catch (Exception e) {
-            log.error("error", e);
-        }
-        return userId;
     }
     /**
      * 获取用户名
@@ -101,16 +85,11 @@ public class TokenManager {
     }
 
     /**
-     * 获取token过期的时间
+     * 获取token过期的时间 分钟
+     * @return
      */
-    public DateTime getRemainingTime(String token) {
-        DateTime dateTime = null;
-        try {
-            Claims claims = getClaimsFromToken(token);
-            dateTime = DateUtil.beginOfMinute(claims.getExpiration());
-        } catch (Exception e) {
-            log.error("error", e);
-        }
-        return dateTime;
+    public long getRemainingTime(String token) {
+        Claims claims = getClaimsFromToken(token);
+        return TimeUnit.MILLISECONDS.toMinutes(claims.getExpiration().getTime() - System.currentTimeMillis());
     }
 }

@@ -5,8 +5,8 @@ import io.netty.util.internal.StringUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
-import xyz.onlytype.security.config.utils.ResponseUtils;
-import xyz.onlytype.security.config.utils.ResultModel;
+import xyz.onlytype.config.utils.ResponseUtils;
+import xyz.onlytype.config.utils.ResultModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,11 +16,12 @@ import javax.servlet.http.HttpServletResponse;
  * @title 注销登录
  * @date 2023/1/28 12:11 上午
  */
+
 public class TokenLogoutHandler implements LogoutHandler {
     private TokenManager tokenManager;
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
 
-    public TokenLogoutHandler(TokenManager tokenManager, RedisTemplate redisTemplate) {
+    public TokenLogoutHandler(TokenManager tokenManager, RedisTemplate<String,Object> redisTemplate) {
         this.tokenManager = tokenManager;
         this.redisTemplate = redisTemplate;
     }

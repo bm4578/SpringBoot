@@ -11,9 +11,14 @@ import xyz.onlytype.entity.SysUser;
  * @author 白也
  * @since 2023-01-28 11:23:37
  */
-public interface SysUserService extends IService<SysUser> {
-
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+public interface SysUserService extends IService<SysUser>{
+    /**
+     * 发送邮箱信息
+     * @param recipient 收件人
+     * @param template 模板
+     * @param message 信息
+     */
+    void sendMessage(String recipient,String template,String message);
 
 }
 
