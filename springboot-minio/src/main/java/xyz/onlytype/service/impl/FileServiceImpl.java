@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<File> selectAll() {
         List<File> list = new ArrayList<>();
-        Iterable<Result<Item>> myObjects = minioClient.listObjects(ListObjectsArgs.builder().useUrlEncodingType(true).bucket(bucket).build());
+        Iterable<Result<Item>> myObjects = minioClient.listObjects(ListObjectsArgs.builder().useUrlEncodingType(true).bucket(bucket).recursive(true).build());
         for (Result<Item> result : myObjects) {
             try {
                 Item item = result.get();
