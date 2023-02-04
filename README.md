@@ -1,3 +1,6 @@
+## 官方文档
+[点此跳往](https://min.io/docs/minio/linux/developers/java/API.html)
+
 ## 配置说明
 1. 安装minio。前提需要装好docker、docker-compose环境，请[参考](https://github.com/bm4578/minio.git) 。
    + 创建文件夹
