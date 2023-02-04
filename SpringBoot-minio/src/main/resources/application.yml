@@ -1,0 +1,27 @@
+#端口号配置
+server:
+  port: 1266
+
+spring:
+  # 配置文件上传大小限制
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+# minio 参数配置
+minio:
+  ip: http://192.168.99.102:9000  # 管理端口
+  username: root    #登录用户，可以自己创建其他用户
+  password: root123456
+  bucket: "test"  #Bucket的名称
+
+logging:
+  level:
+    root: info
+
+knife4j:
+  # 开启增强配置
+  enable: true
+  setting:
+    # 是否开启动态参数调试功能,默认关闭
+    enableDynamicParameter: true
