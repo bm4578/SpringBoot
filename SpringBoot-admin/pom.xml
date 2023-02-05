@@ -15,7 +15,6 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
     <dependencies>
         <!-- common-->
         <dependency>
@@ -28,6 +27,16 @@
             <groupId>xyz.onlytype</groupId>
             <artifactId>SpringBoot-minio</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.tongfei</groupId>
+            <artifactId>progressbar</artifactId>
+            <version>0.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version>
         </dependency>
         <!--springsecurity -->
         <dependency>

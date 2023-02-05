@@ -15,7 +15,6 @@
         <module>SpringBoot-common</module>
         <module>springboot-minio</module>
         <module>springboot-springsecurity</module>
-        <module>SpringBoot-Admin</module>
         <module>SpringBoot-admin</module>
     </modules>
     <!--    springboot版本-->

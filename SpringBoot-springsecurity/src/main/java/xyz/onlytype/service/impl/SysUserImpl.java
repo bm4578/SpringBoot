@@ -44,10 +44,6 @@ public class SysUserImpl implements UserDetailsService {
         if (Objects.isNull(user)) {
             throw new CustomerAuthenionException("用户不存在!!!");
         }
-//        ReturnUserVo returnUserVo = new ReturnUserVo();
-//        if (Objects.isNull(user)){
-//            BeanUtils.copyProperties(user,returnUserVo);
-//        }
         //根据用户名从数据库中查询角色信息
         List<String> roleByName = sysUserDao.findRoleByUserId(user.getUserId());
         //添加相应权限

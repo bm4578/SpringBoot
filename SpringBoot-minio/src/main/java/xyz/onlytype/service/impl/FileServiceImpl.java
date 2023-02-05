@@ -4,14 +4,12 @@ package xyz.onlytype.service.impl;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.onlytype.Application;
 import xyz.onlytype.config.utils.R;
 import xyz.onlytype.entity.File;
 import xyz.onlytype.service.FileService;
@@ -30,8 +28,8 @@ import java.util.*;
  * @title
  */
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
     @Autowired
     private MinioClient minioClient;
     @Autowired
@@ -65,7 +63,7 @@ public class FileServiceImpl implements FileService {
     }
 
     /**
-     * 查询文件
+     * 查询所有文件列表信息
      */
 
     @Override

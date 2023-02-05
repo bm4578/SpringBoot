@@ -20,5 +20,7 @@ public interface SysUserService extends IService<SysUser>{
      */
     void sendMessage(String recipient,String template,String message);
 
+
+
 }
 

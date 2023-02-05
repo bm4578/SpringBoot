@@ -1,21 +1,15 @@
 package xyz.onlytype.controller;
 
 import io.minio.*;
-import io.minio.errors.*;
 import io.minio.messages.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xyz.onlytype.entity.File;
-import xyz.onlytype.entity.Statement;
 import xyz.onlytype.service.impl.FileServiceImpl;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 /**
  * @author 白也
@@ -56,6 +50,11 @@ class FileControllerTest {
             Item item = result.get();
             System.out.println(item.objectName());
         }
+    }
+    @Test
+    void test4(){
+        List<File> files = fileService.selectAll();
+        System.out.println(files);
     }
 
 }
