@@ -31,13 +31,18 @@ import xyz.onlytype.service.impl.SysUserImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenManager tokenManager;
     private RedisTemplate<String,Object> redisTemplate;
+    @Autowired
     private SysUserImpl sysUser;
 
     @Autowired
-    public SecurityConfig(TokenManager tokenManager, RedisTemplate<String,Object> redisTemplate,SysUserImpl sysUser){
+    public SecurityConfig(TokenManager tokenManager, RedisTemplate<String,Object> redisTemplate){
         this.tokenManager = tokenManager;
         this.redisTemplate= redisTemplate;
-        this.sysUser= sysUser;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     /**
@@ -83,10 +88,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
     /**
      * 获得用户名与密码
      * @throws Exception 异常

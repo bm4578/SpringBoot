@@ -70,6 +70,9 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
                 || StringUtils.contains(request.getServletPath(), "favicon")
                 || StringUtils.contains(request.getServletPath(), "v2")
                 || StringUtils.contains(request.getServletPath(), "/api/user/login")
+                || StringUtils.contains(request.getServletPath(), "/api/user/register")
+                || StringUtils.contains(request.getServletPath(), "/api/user/imgCode")
+                || StringUtils.contains(request.getServletPath(), "/api/user/getMsg")
         ) {
             chain.doFilter(request, response);
         } else {

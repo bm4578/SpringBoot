@@ -1,5 +1,8 @@
 package xyz.onlytype.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
 import cn.hutool.core.util.RandomUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -8,14 +11,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.onlytype.config.utils.ResultModel;
 import xyz.onlytype.service.SysUserService;
 import xyz.onlytype.service.impl.SysUserImpl;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,13 +45,18 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
             @ApiImplicitParam(dataType = "String",name = "username", value = "用户名",required = true),
-            @ApiImplicitParam(dataType = "String",name = "password", value = "密码",required = true)
-//            @ApiImplicitParam(dataType = "String",name = "code", value = "验证码",required = true)
+            @ApiImplicitParam(dataType = "String",name = "password", value = "密码",required = true),
+            @ApiImplicitParam(dataType = "String",name = "code", value = "验证码",required = true)
     })
     @PostMapping(value = "/login")
-    public ResultModel login(String username){
+    public ResultModel login(String username,String code){
         try {
-            return ResultModel.ok("登录成功",sysUser.loadUserByUsername(username));
+            String imgCode = stringRedisTemplate.opsForValue().get("verifyCode");
+            if (imgCode.equalsIgnoreCase(code)){
+                return ResultModel.ok("登录成功",sysUser.loadUserByUsername(username));
+            }else {
+                return ResultModel.error("验证码错误");
+            }
         } catch (UsernameNotFoundException e) {
             return ResultModel.error("登录失败",e.getMessage());
         }
@@ -108,5 +116,23 @@ public class UserController {
         } catch (Exception e) {
             return ResultModel.error("发送失败",e.getMessage());
         }
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "图形验证码")
+    @GetMapping ("/imgCode")
+    public void imgCode(HttpServletResponse response) throws IOException {
+        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100,4,3);
+        // 自定义纯数字的验证码（随机4位数字，可重复）
+        captcha.setGenerator(new RandomGenerator("0123456789", 4));
+        //存入redis
+        stringRedisTemplate.opsForValue().set("verifyCode", captcha.getCode(), 1, TimeUnit.MINUTES);
+        //设置返回格式
+        response.setContentType("image/png");
+        ServletOutputStream outputStream = response.getOutputStream();
+        //图形验证码写出，可以写出到文件，也可以写出到流
+        captcha.write(outputStream);
+        //关闭流
+        outputStream.close();
     }
 }
