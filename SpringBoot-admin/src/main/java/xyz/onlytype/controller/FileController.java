@@ -31,7 +31,8 @@ public class FileController {
      * @return 上传结果
      */
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", dataType = "file", name = "file", value = "文件流", required = true)
+            @ApiImplicitParam(paramType = "form", dataType = "file", name = "file", value = "文件流", required = true),
+            @ApiImplicitParam(value = "token",name = "token",paramType  = "header", dataType = "String", required=true)
     })
     @ApiOperation(value = "文件上传", notes = "文件上传", httpMethod = "POST")
     @PostMapping
@@ -47,6 +48,9 @@ public class FileController {
      * 查询文件列表
      * @return  文件列表
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "token",name = "token",paramType  = "header", dataType = "String", required=true)
+    })
     @ApiOperation(value = "查询文件列表", notes = "查询文件列表", httpMethod = "GET")
     @GetMapping
     public ResultModel selectFileList(){
@@ -63,7 +67,8 @@ public class FileController {
      * @return 返回结果
      */
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType = "string", name = "fileName", value = "文件名", required = true)
+            @ApiImplicitParam(paramType = "query", dataType = "string", name = "fileName", value = "文件名", required = true),
+            @ApiImplicitParam(value = "token",name = "token",paramType  = "header", dataType = "String", required=true)
     })
     @ApiOperation(value = "删除文件", notes = "删除文件", httpMethod = "DELETE")
     @DeleteMapping
@@ -83,7 +88,9 @@ public class FileController {
      */
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType = "HttpServletResponse", name = "response", value = "response流", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "string", name = "fileName", value = "文件名", required = true)
+            @ApiImplicitParam(paramType = "query", dataType = "string", name = "fileName", value = "文件名", required = true),
+            @ApiImplicitParam(value = "token",name = "token",paramType  = "header", dataType = "String", required=true)
+
     })
     @ApiOperation(value = "下载文件", notes = "下载文件", httpMethod = "GET")
     @GetMapping("download")

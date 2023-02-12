@@ -1,17 +1,21 @@
 package xyz.onlytype.security.Filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import xyz.onlytype.entity.SecurityUser;
 import xyz.onlytype.config.utils.ResponseUtils;
 import xyz.onlytype.config.utils.ResultModel;
 import xyz.onlytype.security.exception.CustomerAuthenionException;
+import xyz.onlytype.security.exception.PasswordException;
 import xyz.onlytype.security.token.TokenManager;
 import xyz.onlytype.vo.ReturnUserVo;
 
@@ -56,6 +60,19 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
         try {
+            // TODO 验证码校验
+            //1.获取登录请求的验证码
+            String inputCode = request.getParameter("code");
+            //判断验证码是否为空
+            if(StringUtils.isEmpty(inputCode)) {
+                throw new CustomerAuthenionException("验证码不能为空!");
+            }
+            //从redis获取验证码
+            Integer  imgCode = (Integer) redisTemplate.opsForValue().get("verifyCode");
+            //判断验证码是否相等
+            if(!inputCode.equalsIgnoreCase(String.valueOf(imgCode))){
+                throw new CustomerAuthenionException("验证码输入错误!");
+            }
             //从表单中获取用户信息
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -63,8 +80,10 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
                             request.getParameter("password")
                             , new ArrayList<>())
             );
-        } catch (AuthenticationException e) {
+        } catch (UsernameNotFoundException e) {
            throw new CustomerAuthenionException(e.getMessage());
+        } catch (BadCredentialsException e){
+            throw new PasswordException("密码错误 ! ! !");
         }
     }
 
@@ -100,12 +119,12 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     /**
      * 认证失败
      *
-     * @param request
-     * @param response
-     * @param failed
+     * @param request req
+     * @param response res
+     * @param exception 错误信息
      */
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtils.out(response, ResultModel.error(401, failed.getMessage()));
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        ResponseUtils.out(response, ResultModel.error(501,exception.getMessage()));
     }
 }

@@ -31,18 +31,17 @@ public class SysUserImpl implements UserDetailsService {
      *
      * @param username 用户名
      * @return 用户信息
-     * @throws UsernameNotFoundException 用户异常
      */
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         //从数据库查询用户信息
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getUsername, username);
         SysUser user = sysUserDao.selectOne(queryWrapper);
         if (Objects.isNull(user)) {
-            throw new CustomerAuthenionException("用户不存在!!!");
+            throw new CustomerAuthenionException("用户名不存在 ! ! !");
         }
         //根据用户名从数据库中查询角色信息
         List<String> roleByName = sysUserDao.findRoleByUserId(user.getUserId());

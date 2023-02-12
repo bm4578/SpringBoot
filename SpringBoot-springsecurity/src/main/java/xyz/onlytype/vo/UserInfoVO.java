@@ -8,21 +8,20 @@ import java.io.Serializable;
 
 /**
  * @author 白也
- * @title 封装用户权限信息
- * @date 2023/1/28 14:57
+ * @title 用户所有信息
+ * @date 2023/2/11 9:54 下午
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRoleVO implements Serializable {
+public class UserInfoVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    //用户id
-    private String userId;
-    //系统登录名
+    //用户名称
     private String username;
-    //角色id
-    private String roleId;
     //角色名称
     private String roleName;
+    //用户邮箱
+
+
 
 }

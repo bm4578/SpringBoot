@@ -1,7 +1,9 @@
 package xyz.onlytype.security.Filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,7 +57,6 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         //不需要token验证
         if (StringUtils.contains(request.getServletPath(), "swagger")
                 || StringUtils.contains(request.getServletPath(), "webjars")
@@ -109,5 +110,4 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         }
     }
-
 }

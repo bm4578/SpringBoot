@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xyz.onlytype.security.Filter.LoginFailureFilter;
 import xyz.onlytype.security.Filter.TokenAuthFilter;
 import xyz.onlytype.security.Filter.UnAuthEntryPoint;
 import xyz.onlytype.security.Filter.TokenLoginFilter;
@@ -53,8 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws  Exception{
         http.formLogin()
-//                //登录失败时异常处理
-                .failureHandler(new LoginFailureFilter())
                 .and()
                 .exceptionHandling()
                 //无权限时处理方案

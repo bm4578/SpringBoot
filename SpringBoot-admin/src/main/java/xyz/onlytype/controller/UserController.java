@@ -49,14 +49,9 @@ public class UserController {
             @ApiImplicitParam(dataType = "String",name = "code", value = "验证码",required = true)
     })
     @PostMapping(value = "/login")
-    public ResultModel login(String username,String code){
+    public ResultModel login(String username){
         try {
-            String imgCode = stringRedisTemplate.opsForValue().get("verifyCode");
-            if (imgCode.equalsIgnoreCase(code)){
-                return ResultModel.ok("登录成功",sysUser.loadUserByUsername(username));
-            }else {
-                return ResultModel.error("验证码错误");
-            }
+            return ResultModel.ok(sysUser.loadUserByUsername(username));
         } catch (UsernameNotFoundException e) {
             return ResultModel.error("登录失败",e.getMessage());
         }
@@ -117,14 +112,13 @@ public class UserController {
             return ResultModel.error("发送失败",e.getMessage());
         }
     }
-
     @CrossOrigin
     @ApiOperation(value = "图形验证码")
     @GetMapping ("/imgCode")
     public void imgCode(HttpServletResponse response) throws IOException {
         LineCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100,4,3);
-        // 自定义纯数字的验证码（随机4位数字，可重复）
-        captcha.setGenerator(new RandomGenerator("0123456789", 4));
+//        // 自定义纯数字的验证码（随机4位数字，可重复）
+        captcha.setGenerator(new RandomGenerator("123456789", 4));
         //存入redis
         stringRedisTemplate.opsForValue().set("verifyCode", captcha.getCode(), 1, TimeUnit.MINUTES);
         //设置返回格式
